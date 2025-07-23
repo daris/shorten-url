@@ -6,7 +6,7 @@ class URLSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = URL
-        fields = ['original_url', 'short_url']
+        fields = ['short_url']
 
     def get_short_url(self, obj):
         request = self.context.get('request')
