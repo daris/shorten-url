@@ -22,7 +22,11 @@ class ShortenURLView(APIView):
             serializer = URLSerializer(existing, context={'request': request})
             return Response(serializer.data)
 
-        url = URL.objects.create(original_url=original_url, short_id=generate_short_id())
+        short_id = generate_short_id()
+        while URL.objects.filter(short_id=short_id).exists():
+            short_id = generate_short_id()
+
+        url = URL.objects.create(original_url=original_url, short_id=short_id)
         serializer = URLSerializer(url, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
