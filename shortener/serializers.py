@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from .models import URL
 
+
+class URLInputSerializer(serializers.Serializer):
+    url = serializers.URLField(required=True)
+
+
 class URLSerializer(serializers.ModelSerializer):
     short_url = serializers.SerializerMethodField()
 

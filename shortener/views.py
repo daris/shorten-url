@@ -5,14 +5,16 @@ from django.shortcuts import get_object_or_404, redirect
 
 from .utils import generate_short_id
 from .models import URL
-from .serializers import URLSerializer
+from .serializers import URLInputSerializer, URLSerializer
 
 
 class ShortenURLView(APIView):
     def post(self, request):
-        original_url = request.data.get('url')
-        if not original_url:
-            return Response({'error': 'URL is required'}, status=status.HTTP_400_BAD_REQUEST)
+        input_serializer = URLInputSerializer(data=request.data)
+        if not input_serializer.is_valid():
+            return Response(input_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        original_url = input_serializer.validated_data['url']
 
         # Return existing if already stored
         existing = URL.objects.filter(original_url=original_url).first()
