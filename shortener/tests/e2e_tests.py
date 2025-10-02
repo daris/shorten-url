@@ -12,7 +12,10 @@ class ShortenUrlViewTests(TestCase):
             {"url": "http://example.com/very-very/long/url/even-longer"},
             format="json"
         )
-        assert response.status_code == status.HTTP_201_CREATED
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        data = response.json()
+        self.assertIn('short_url', data)
 
     def test_invalid_input_data(self) -> None:
         client = APIClient()
@@ -21,4 +24,4 @@ class ShortenUrlViewTests(TestCase):
             {"url": "some invalid url"},
             format="json"
         )
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

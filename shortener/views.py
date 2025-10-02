@@ -3,7 +3,9 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
 
-from shortener.serializers import URLInputSerializer
+from shortener.models import URL
+from shortener.serializers import URLInputSerializer, URLSerializer
+from shortener.utils import generate_unique_short_id
 
 
 class ShortenURLView(APIView):
@@ -12,7 +14,13 @@ class ShortenURLView(APIView):
         if not input_serializer.is_valid():
             return Response(input_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(status=status.HTTP_201_CREATED)
+        original_url = input_serializer.validated_data['url']
+
+        short_id = generate_unique_short_id()
+
+        url = URL.objects.create(original_url=original_url, short_id=short_id)
+        serializer = URLSerializer(url, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class RedirectView(APIView):
