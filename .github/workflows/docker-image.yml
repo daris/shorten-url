@@ -17,4 +17,7 @@ jobs:
         run: docker compose build
 
       - name: Lint code
-        run: docker compose run server flake8
+        run: docker compose run --rm server flake8
+
+      - name: Run tests
+        run: docker compose run --rm server pytest
