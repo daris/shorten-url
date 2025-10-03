@@ -1,5 +1,10 @@
 # Shorten URL
 
+This project is a minimal **URL Shortener API** built with **Django REST Framework (DRF)**.
+
+It provides a simple way to create short links for long URLs and to resolve them back to their original form.
+
+
 ## Run project
 
 ```sh
@@ -8,7 +13,7 @@ docker compose up -d
 
 ## Generate short URL
 
-### Shell command
+### Option 1: Shell command
 You can use curl shell command to call a request:
 
 ```sh
@@ -21,7 +26,7 @@ Example response:
 {"short_url":"http://localhost:8000/short/H2U6ui/"}
 ```
 
-### Django Rest Framework Web UI
+### Option 2: Django Rest Framework Web UI
 
 * Open http://localhost:8000/api/shorten/ in browser
 * Paste in content field:
