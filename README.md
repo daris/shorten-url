@@ -2,7 +2,7 @@
 
 ## Run project
 
-```
+```sh
 docker compose up -d
 ```
 
@@ -10,12 +10,14 @@ docker compose up -d
 
 ### Shell command
 You can use curl shell command to call a request:
+
 ```sh
 curl -X POST -H "Content-Type: application/json" http://localhost:8000/api/shorten/ -d '{"url": "http://example.com/very-very/long/url/even-longer"}'
 ```
 
 Example response:
-```
+
+```json
 {"short_url":"http://localhost:8000/short/H2U6ui/"}
 ```
 
@@ -23,9 +25,11 @@ Example response:
 
 * Open http://localhost:8000/api/shorten/ in browser
 * Paste in content field:
-```
+
+```json
 {"url": "http://example.com/very-very/long/url/even-longer"}
 ``` 
+
 * And click "POST"
 
 * Example response:
@@ -44,3 +48,17 @@ Vary: Accept
 ## Decode short URL back to full URL
 
 Open in browser short_url included in JSON response. You will be redirected to original URL.
+
+
+## Run tests
+
+```sh
+docker compose run --rm server pytest
+```
+
+
+## Lint code
+
+```sh
+docker compose run --rm server flake8
+```
